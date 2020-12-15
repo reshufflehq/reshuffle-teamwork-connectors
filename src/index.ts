@@ -1,8 +1,4 @@
-import {
-  Reshuffle,
-  BaseHttpConnector,
-  EventConfiguration,
-} from 'reshuffle-base-connector'
+import { Reshuffle, BaseHttpConnector, EventConfiguration } from 'reshuffle-base-connector'
 import { Request, Response, NextFunction } from 'express'
 import tw from 'teamwork-api'
 
@@ -15,7 +11,7 @@ export interface TeamworkConnectorConfigOptions {
 }
 
 export interface TeamworkConnectorEventOptions {
-  type: TWEventType
+  type: TeamworkEventType
 }
 
 export default class TeamworkConnector extends BaseHttpConnector<
@@ -63,20 +59,20 @@ export default class TeamworkConnector extends BaseHttpConnector<
     }
 
     if (eventsToExecute.length == 0) {
-      res.send({ text: 'Error' })
+      res.send({ text: 'Error' }).status(404)
+    } else {
+      res.sendStatus(200)
     }
-    res.sendStatus(200)
     return true
   }
 
   // Actions
   async sdk() {
-    this.app.getLogger().info(`Teamwork - SDK Returned`)
     return this.client
   }
 }
 
-export type TWEventType =
+export type TeamworkEventType =
   | 'CALENDAREVENT.CREATED'
   | 'CALENDAREVENT.DELETED'
   | 'CALENDAREVENT.REMINDER'

@@ -26,7 +26,7 @@ const connector = new TeamworkConnector(app,  {
 })
 
 connector.on({ type: 'TASK.UPDATED' }, async (event, app) => {
-  console.log('TASK.UPDATED')
+  console.log('Task updated on Teamwork YOUR_SUB_DOMAIN')
   console.log(event.eventCreator.id)
   console.log(event.taskList.name)
   console.log(event.task)
@@ -66,8 +66,8 @@ const connector = new TeamworkConnector(app, {
 
 More details about the fields are described in [teamwork-api](https://github.com/moshie/teamwork-api)
 
-You can use the `webhookPath` to configure the url that Teamwork hits when it makes its calls to.
-For example - having the Reshuffle runtime URL `https://my-reshuffle.com` and `webhookPath='/webhook` will result in a complete webhook path of `https://my-reshuffle.com/webhook`.
+You can use the `webhookPath` to configure the url that Teamwork hits when it makes its calls to Reshuffle.
+For example - having the Reshuffle runtime URL `https://my-reshuffle.com` and `webhookPath=/webhook` will result in a complete webhook path of `https://my-reshuffle.com/webhook`.
 If you do not provide a `webhookPath`, Reshuffle will use the default webhook path for the connector which is `/webhooks/teamwork`.
 You will need to register this webhook with Teamwork. See [instructions](https://developer.teamwork.com/projects/webhooks/setup).
 
@@ -82,11 +82,11 @@ function, providing a `TeamworkConnectorEventOptions` to it.
 
 ```typescript
 interface TeamworkConnectorEventOptions {
-  type: TWEventType // See bellow 
+  type: TeamworkEventType // See bellow 
 }
 
 // Where...
-type TWEventType =
+type TeamworkEventType =
   | 'CALENDAREVENT.CREATED'
   | 'CALENDAREVENT.DELETED'
   | 'CALENDAREVENT.REMINDER'
@@ -209,7 +209,7 @@ _Example:_
 
 ```typescript
 connector.on({ type: 'TASK.UPDATED' }, async (event, app) => {
-  console.log('TASK.UPDATED')
+  console.log('Task updated on Teamwork YOUR_SUB_DOMAIN')
   console.log(event.eventCreator.id)
   console.log(event.taskList.name)
   console.log(event.task)
