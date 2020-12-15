@@ -1,5 +1,5 @@
 import { Reshuffle, BaseHttpConnector, EventConfiguration } from 'reshuffle-base-connector'
-import { Request, Response, NextFunction } from 'express'
+import { Request, Response } from 'express'
 import tw from 'teamwork-api'
 
 const DEFAULT_WEBHOOK_PATH = '/webhooks/teamwork'
@@ -19,7 +19,7 @@ export default class TeamworkConnector extends BaseHttpConnector<
   TeamworkConnectorEventOptions
 > {
   private client: any
-  private webhookPath = ''
+  private webhookPath
 
   constructor(app: Reshuffle, options?: TeamworkConnectorConfigOptions, id?: string) {
     super(app, options, id)
@@ -57,12 +57,8 @@ export default class TeamworkConnector extends BaseHttpConnector<
     for (const event of eventsToExecute) {
       await this.app.handleEvent(event.id, webhookPayload)
     }
-
-    if (eventsToExecute.length == 0) {
-      res.send({ text: 'Error' }).status(404)
-    } else {
-      res.sendStatus(200)
-    }
+  
+    res.send(eventsToExecute.length == 0 ? '' : { text: 'Error - no handler configured.' })
     return true
   }
 
