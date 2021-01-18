@@ -2,7 +2,7 @@
 
 [Code](https://github.com/reshufflehq/reshuffle-teamwork-connectors) |
 [npm](https://www.npmjs.com/package/reshuffle-teamwork-connectors) |
-[Code sample](https://github.com/reshufflehq/reshuffle-teamwork-connectors/examples)
+
 
 `npm install reshuffle-teamwork-connectors`
 
